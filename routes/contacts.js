@@ -23,6 +23,17 @@ route.post('/', // Multiple Middlewares are added in an array -> []
 		// 5. Save Contact in schema
 
 		// 6. Return same contact to user; 
-	})
+})
+// @route   PUT /api/contacts
+// @desc    To update an existing contact
+// @access  Private
+route.put('/:id',(req,res)=>{
+	//update Contact
+})
+
+
+route.delete('/:id',(req,res)=>{
+	//Delete Contact
+})
 
 module.exports = route;

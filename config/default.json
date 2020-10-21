@@ -1,3 +1,4 @@
 {
-	"mongoURI" : ""
+	"mongoURI" : "mongodb://localhost:27017/contactKeeper",
+	"jwtSecret" : "contact-keeper-secret"
 }
