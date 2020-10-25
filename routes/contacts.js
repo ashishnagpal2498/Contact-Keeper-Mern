@@ -1,12 +1,24 @@
 const route = require('express').Router();
+const auth = require('../middleware/auth');
+const Contacts = require('../models/Contact')
+const {body, validationResult} = require('express-validator')
 // Express Validator
 
 //@route	GET /api/contacts
 //@desc
 //@access	Private
-route.get('/', // 1) auth
+route.get('/', auth,
 async (req,res)=>{
-	//
+	try {
+		const userContacts = await Contacts.find({
+			user: req.user.id
+		})
+		return res.json(userContacts)
+		
+	} catch (err) {
+		console.error(err);
+		return res.status(500).json({error:err.message})
+	}
 })
 
 // @route   POST /api/contacts
@@ -14,15 +26,33 @@ async (req,res)=>{
 // @access  Private
 route.post('/', // Multiple Middlewares are added in an array -> []
 	// 1. Add Middleware Express Validator + auth ->
-	(req, res) => {
-		// 2. Call validator for result ->
-		// 3. Check for Erro -> from validator
+	[auth,[body('name','Please enter name').exists(),body('phone').exists()]],
+	async (req, res) => {
+		const err = validationResult(req);
+		if(!err.isEmpty()){
+			return res.status(400).json({error:err.array()})
+		}
+		try{
+			
+			const {name,email,phone,type} = req.body;
+			const contact = new Contacts({
+				name,email,phone,type,
+				user:req.user.id,
+			
+			})
+			// 2. Call validator for result ->
+			// 3. Check for Erro -> from validator
+	
+			// 4. Create New Contact 
+			await contact.save();
+			// 5. Save Contact in schema
+			return res.json(contact);
+			// 6. Return same contact to user; 
+		}catch(error){
+			console.log(error.message);
+			return res.status(500).json({error:error.message});
 
-		// 4. Create New Contact 
-
-		// 5. Save Contact in schema
-
-		// 6. Return same contact to user; 
+		}
 })
 // @route   PUT /api/contacts
 // @desc    To update an existing contact
