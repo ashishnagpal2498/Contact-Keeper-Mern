@@ -32,19 +32,18 @@ route.post('/', // Multiple Middlewares are added in an array -> []
 		if(!err.isEmpty()){
 			return res.status(400).json({error:err.array()})
 		}
+		const {name,email,phone,type} = req.body;
+		
 		try{
-			
-			const {name,email,phone,type} = req.body;
-			const contact = new Contacts({
+			const newContact = new Contacts({
 				name,email,phone,type,
 				user:req.user.id,
-			
 			})
 			// 2. Call validator for result ->
 			// 3. Check for Erro -> from validator
 	
 			// 4. Create New Contact 
-			await contact.save();
+			const contact = await newContact.save();
 			// 5. Save Contact in schema
 			return res.json(contact);
 			// 6. Return same contact to user; 
