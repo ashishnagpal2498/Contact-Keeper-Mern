@@ -1,24 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const ContactItem = ({contact:{name,id , email,phone,type}}) => {
+const ContactItem = ({ contact: { name, id, email, phone, type } }) => {
 	return (
 		<div className="card bg-light">
 			<h3 className="text-primary text-left">
 				{name} {' '}
-				<span style={{float:'right'}} className={'badge ' + (type === 'professional' ? 'badge-success' : 'badge-primary')}>
+				<span style={{ float: 'right' }} className={'badge ' + (type === 'professional' ? 'badge-success' : 'badge-primary')}>
 					{type.charAt(0).toUpperCase() + type.slice(1)}</span>
 			</h3>
 			<ul className="list">
 				{
-					email && <li><i className="fas fa-envelope-open"/>  {email}</li>
+					email && <li><i className="fas fa-envelope-open" />  {email}</li>
 				}
 				{
-					phone && <li><i className="fas fa-phone"/> {phone}</li>
+					phone && <li><i className="fas fa-phone" /> {phone}</li>
 				}
 			</ul>
 			<p>
-				<button className="btn btn-dark btn-md">Edit</button>
+				<button className="btn btn-dark btn-md"><i className="fas fa-trash-alt" /></button>
 				<button className="btn btn-danger btn-md">Delete</button>
 			</p>
 		</div>

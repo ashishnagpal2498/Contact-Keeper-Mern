@@ -5,6 +5,7 @@ const Home = () => {
 	return (
 		<div className="grid-2">
 			<div className="">
+				{/* Form here */}
 				Form Here
 			</div>
 			<div className="">
