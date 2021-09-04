@@ -1,15 +1,15 @@
 import React from 'react'
+import { ContactForm } from '../contact/ContactForm';
 import Contacts from '../contact/Contacts'
 
 const Home = () => {
 	return (
 		<div className="grid-2">
 			<div className="">
-				{/* Form here */}
-				Form Here
+				<ContactForm />
 			</div>
 			<div className="">
-				<Contacts/>
+				<Contacts />
 			</div>
 		</div>
 	)
