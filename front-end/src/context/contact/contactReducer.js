@@ -7,7 +7,8 @@ import {
 	UPDATE_CONTACT,
 	FILTER_CONTACTS,
 	SET_ALERT,
-	CLEAR_ALERT
+	CLEAR_ALERT,
+	CLEAR_FILTER
 } from '../types';
 
 const reducerFunc = (state, action) => {
@@ -37,6 +38,19 @@ const reducerFunc = (state, action) => {
 				...state,
 				contacts: state.contacts.map(item => item.id === action.payload.id ? action.payload : item),
 				current: null
+			}
+		case FILTER_CONTACTS:
+			return {
+				...state,
+				filteredContacts: state.contacts.filter(contact => {
+					const regex = new RegExp(action.payload, 'gi')
+					return contact.name.match(regex) || contact.email.match(regex);
+				})
+			}
+		case CLEAR_FILTER:
+			return {
+				...state,
+				filteredContacts: null
 			}
 		default: return state;
 	}
