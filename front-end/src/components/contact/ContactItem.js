@@ -1,15 +1,27 @@
-import React, {useContext} from 'react'
+import React, { useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ContactContext from '../../context/contact/contactContext'
+import AlertContext from '../../context/alert/AlertContext'
 
 const ContactItem = ({ contact }) => {
 	const contactContext = useContext(ContactContext);
 
-	const {deleteContact,setCurrent,clearCurrent} = contactContext;
+	const { deleteContact, setCurrent, clearCurrent, error, clearError } = contactContext;
 
-	const { name, id, email, phone, type } = contact;
+	const { name, _id, email, phone, type } = contact;
+
+	const alertContext = useContext(AlertContext);
+	const { setAlert } = alertContext;
+
+	useEffect(() => {
+		if (error === 'Deleted Successfully') {
+			setAlert(error, "success", 3000)
+			clearError();
+		}
+		//eslint-disable-next-line
+	}, [error])
 	const DeleteContact = () => {
-		deleteContact(id);
+		deleteContact(_id);
 		clearCurrent();
 	}
 	return (
@@ -28,7 +40,7 @@ const ContactItem = ({ contact }) => {
 				}
 			</ul>
 			<p>
-				<button className="btn btn-dark btn-md" onClick={()=> setCurrent(contact)}><i className="fas fa-pencil-alt" /></button>
+				<button className="btn btn-dark btn-md" onClick={() => setCurrent(contact)}><i className="fas fa-pencil-alt" /></button>
 				<button className="btn btn-danger btn-md" onClick={DeleteContact}><i className="fas fa-trash-alt" /></button>
 			</p>
 		</div>

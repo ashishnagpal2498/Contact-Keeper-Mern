@@ -28,7 +28,7 @@ const AuthState = props => {
 			const res = await axios.get('/api/auth');
 			dispatch({ type: USER_LOADED, payload: res.data });
 		} catch (error) {
-			dispatch({ type: AUTH_ERROR })
+			dispatch({ type: AUTH_ERROR, payload: error.response.data.message })
 		}
 	}
 
@@ -71,7 +71,7 @@ const AuthState = props => {
 
 	}
 	//Logout
-	const logout = () => dispatch({type:LOGOUT})
+	const logout = () => dispatch({ type: LOGOUT })
 	//Clear Errors
 	const clearError = () => dispatch({ type: CLEAR_ERRORS })
 	return <AuthContext.Provider

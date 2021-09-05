@@ -53,7 +53,7 @@ route.post('/',
 				}
 			}
 			jwt.sign(payload, jwtSecret, {
-				expiresIn: '1hr'
+				expiresIn: 3600
 			}, (error, token) => {
 				if (error) throw error;
 				res.json({ token });

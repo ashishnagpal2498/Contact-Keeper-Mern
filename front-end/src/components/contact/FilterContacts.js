@@ -13,7 +13,6 @@ const FilterContacts = () => {
 	})
 	const onChange = (e) => {
 		if (text.current.value !== '') {
-			console.log('Onchange -> Filter contacts Run')
 			filterContacts(e.target.value);
 		}
 		else

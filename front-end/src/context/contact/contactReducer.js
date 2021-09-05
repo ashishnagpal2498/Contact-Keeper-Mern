@@ -1,32 +1,54 @@
 // Contact Reducer ->
 import {
 	ADD_CONTACT,
+	GET_CONTACTS,
+	CLEAR_CONTACTS,
 	DELETE_CONTACT,
 	SET_CURRENT,
 	CLEAR_CURRENT,
 	UPDATE_CONTACT,
 	FILTER_CONTACTS,
-	SET_ALERT,
-	CLEAR_ALERT,
-	CLEAR_FILTER
+	CLEAR_FILTER,
+	CONTACT_ERROR,
+	CLEAR_ERRORS
 } from '../types';
 
 const reducerFunc = (state, action) => {
 	switch (action.type) {
+		case GET_CONTACTS:
+			return {
+				...state,
+				contacts: action.payload,
+				loading: false
+			}
 		case ADD_CONTACT:
 			return {
 				...state,
-				contacts: [...state.contacts, action.payload]
+				contacts: [...state.contacts, action.payload],
+				loading: false
 			}
 		case DELETE_CONTACT:
 			return {
 				...state,
-				contacts: state.contacts.filter(contact => contact.id !== action.payload)
+				loading: false,
+				contacts: state.contacts.filter(contact => contact._id !== action.payload.id),
+				error: "Deleted Successfully"
+			}
+		case CONTACT_ERROR:
+			return {
+				...state,
+				error: action.payload
+			}
+		case CLEAR_ERRORS:
+			return {
+				...state,
+				error: null
 			}
 		case SET_CURRENT:
 			return {
 				...state,
-				current: action.payload
+				current: action.payload,
+				loading: false
 			}
 		case CLEAR_CURRENT:
 			return {
@@ -36,8 +58,9 @@ const reducerFunc = (state, action) => {
 		case UPDATE_CONTACT:
 			return {
 				...state,
-				contacts: state.contacts.map(item => item.id === action.payload.id ? action.payload : item),
-				current: null
+				contacts: state.contacts.map(item => item._id === action.payload._id ? action.payload : item),
+				current: null,
+				loading: false
 			}
 		case FILTER_CONTACTS:
 			return {
@@ -51,6 +74,13 @@ const reducerFunc = (state, action) => {
 			return {
 				...state,
 				filteredContacts: null
+			}
+		case CLEAR_CONTACTS:
+			return {
+				...state,
+				filteredContacts: null,
+				current: null,
+				contacts: null
 			}
 		default: return state;
 	}

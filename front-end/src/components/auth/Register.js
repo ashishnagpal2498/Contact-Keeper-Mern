@@ -26,6 +26,7 @@ const Register = props => {
 			setAlert(error, "danger")
 		}
 		clearError();
+		//eslint-disable-next-line
 	}, [error, isAuthenticated, props.history])
 	const onChange = e => setUser({ ...user, [e.target.name]: e.target.value })
 

@@ -1,11 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react'
 import ContactContext from '../../context/contact/contactContext';
-import { UPDATE_CONTACT } from '../../context/types';
+import AlertContext from '../../context/alert/AlertContext'
 
 export const ContactForm = () => {
+	// contact Context
 	const contactContext = useContext(ContactContext);
+	const { addContact, current, updateContact, clearCurrent, error, clearError } = contactContext;
 
-	const { addContact, current, updateContact, clearCurrent } = contactContext;
+	// Alert Context
+	const alertContext = useContext(AlertContext);
+	const { setAlert } = alertContext;
 	const [contact, setContact] = useState({
 		name: '',
 		email: "",
@@ -24,7 +28,12 @@ export const ContactForm = () => {
 				type: "personal"
 			});
 		}
-	}, [contactContext, current])
+		if (error === 'ERROR') {
+			setAlert(error, "warn", 3000);
+			clearError();
+		}
+		//eslint-disable-next-line
+	}, [contactContext, current, error])
 	const { name, email, phone, type } = contact;
 
 	const onChange = (e) => {
@@ -46,7 +55,7 @@ export const ContactForm = () => {
 		})
 	}
 
-	const clear = e => {
+	const clear = () => {
 		clearCurrent();
 	}
 	return (
@@ -69,15 +78,15 @@ export const ContactForm = () => {
 			<input
 				type="text"
 				name="phone"
-				placeholder="phone"
 				value={phone}
+				placeholder="Phone"
 				onChange={onChange}
 			/>
 			<h5>Contact type</h5>
 			<input type="radio" name="type" value="personal" checked={type === 'personal'} onChange={onChange} /> {'Personal  '}
 			<input type="radio" name="type" value="professional" checked={type === 'professional'} onChange={onChange} /> {'Professional  '}
 			<input type="submit" value={current ? "Update" : 'Add'} className="btn btn-primary btn-block" />
-			{current && <input type="click" value="Clear" onClick={clear} className="btn btn-light btn-block" />
+			{current && <button type="click" readOnly value="Clear" onClick={clear} className="btn btn-light btn-block" />
 			}
 		</form>
 	)

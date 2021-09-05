@@ -18,11 +18,11 @@ const Login = props => {
 		if (isAuthenticated) {
 			props.history.push('/')
 		}
-		if (error !== null) {
+		if (error === 'Either email or password incorrect') {
 			setAlert(error, "danger")
 			clearError();
 		}
-
+		//eslint-disable-next-line
 	}, [error, isAuthenticated, props.history])
 
 	const onChange = e => setUser({ ...user, [e.target.name]: e.target.value })

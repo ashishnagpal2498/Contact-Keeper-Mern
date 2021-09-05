@@ -5,15 +5,16 @@ const jwtSecret = require('config').get('jwtSecret');
 module.exports = (req, res, next) => {
 	// Try Catch ->
 	const token = req.header('x-auth-token');
-	if(!token){
-		return res.status(401).send({error: 'Unauthorized access'})
+	if (!token) {
+		console.log('Here')
+		return res.status(401).send({ message: 'Unauthorized access' })
 	}
-	try{
-	const decoded = jwt.verify(token,jwtSecret)
-	req.user = decoded.user;
-	next();
-	}catch(err){
-		res.status(401).json({error:'Invalid Token'})
+	try {
+		const decoded = jwt.verify(token, jwtSecret)
+		req.user = decoded.user;
+		next();
+	} catch (err) {
+		res.status(401).json({ error: 'Invalid Token' })
 	}
 	// 1. Grab token from header ->
 	// 2. Check if Token valid
