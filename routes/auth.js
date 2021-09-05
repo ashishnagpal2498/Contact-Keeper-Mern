@@ -32,19 +32,19 @@ route.post('/',
 		// 2. Express- Validator Result ->
 		const err = validationResult(req);
 		if (!err.isEmpty()) {
-			return res.status(400).json({ error: err.array() });
+			return res.status(400).json({ message: err.array() });
 		}
 		const { email, password } = req.body;
 		try {
 			const user = await User.findOne({ email });
 
 			if (!user) {
-				return res.status(400).json({ error: 'Either email or password incorrect' })
+				return res.status(400).json({ message: 'Either email or password incorrect' })
 			}
 
 			const isEqual = await bcrypt.compare(password, user.password)
 			if (!isEqual) {
-				return res.status(400).json({ error: 'Either email or password incorrect' })
+				return res.status(400).json({ message: 'Either email or password incorrect' })
 			}
 
 			const payload = {

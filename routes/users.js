@@ -18,13 +18,13 @@ route.post('/', [
 	async (req, res) => {
 		const err = validationResult(req);
 		if (!err.isEmpty()) {
-			return res.status(400).send({ error: err.array() })
+			return res.status(400).send({ message: err.array() })
 		}
 		const { email, name, password } = req.body;
 		try {
 			let user = await User.findOne({ email });
 			if (user) {
-				return res.status(400).send({ error: "User Already Exists" })
+				return res.status(400).send({ message: "User Already Exists" })
 			}
 
 			user = new User({
@@ -49,7 +49,7 @@ route.post('/', [
 
 		} catch (error) {
 			console.error(error.message);
-			res.status(500).send({ error: error.message })
+			res.status(500).send({ message: error.message })
 		}
 		// Try catch -> -> Avoid -> Messy code -> handling error ->
 		// 2. Call validator for result ->
