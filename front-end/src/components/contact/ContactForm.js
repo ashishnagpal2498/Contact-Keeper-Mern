@@ -86,7 +86,7 @@ export const ContactForm = () => {
 			<input type="radio" name="type" value="personal" checked={type === 'personal'} onChange={onChange} /> {'Personal  '}
 			<input type="radio" name="type" value="professional" checked={type === 'professional'} onChange={onChange} /> {'Professional  '}
 			<input type="submit" value={current ? "Update" : 'Add'} className="btn btn-primary btn-block" />
-			{current && <button type="click" readOnly value="Clear" onClick={clear} className="btn btn-light btn-block" />
+			{current && <button type="click" readOnly value="Clear" onClick={clear} className="btn btn-light btn-block" >Clear</button>
 			}
 		</form>
 	)
