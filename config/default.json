@@ -1,4 +1,4 @@
 {
-	"mongoURI" : "mongodb+srv://ashish:n72J4LuimKvzFM8@cluster0.vpyrx.mongodb.net/contactKeeper?retryWrites=true&w=majority",
+	"mongoURI" : "-",
 	"jwtSecret" : "contact-keeper-secret"
 }
